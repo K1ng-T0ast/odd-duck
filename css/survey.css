@@ -1,0 +1,16 @@
+#voting {
+    border: thin solid black;
+}
+
+#voting {
+    display: grid;
+    width: 500px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+img {
+    max-width: 100%;
+    height: auto;   
+    margin: auto;
+}
