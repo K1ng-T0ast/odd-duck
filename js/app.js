@@ -10,25 +10,25 @@ function Image(name, source) {
     this.source = source;
 }
 
-survey.push(new Image('bag', '../img/bag.jpg'));
-survey.push(new Image('banana', '../img/banana.jpg'));
-survey.push(new Image('bathroom', '../img/bathroom.jpg'));
-survey.push(new Image('boots', '../img/boots.jpg'));
-survey.push(new Image('breakfast', '../img/breakfast.jpg'));
-survey.push(new Image('bubblegum', '../img/bubblegum.jpg'));
-survey.push(new Image('chair', '../img/chair.jpg'));
-survey.push(new Image('cthulhu', '../img/cthulhu.jpg'));
-survey.push(new Image('dog duck', '../img/dog-duck.jpg'));
-survey.push(new Image('dragon', '../img/dragon.jpg'));
-survey.push(new Image('pen', '../img/pen.jpg'));
-survey.push(new Image('pet sweep', '../img/pet-sweep.jpg'));
-survey.push(new Image('scissors', '../img/scissors.jpg'));
-survey.push(new Image('shark', '../img/shark.jpg'));
-survey.push(new Image('sweep', '../img/sweep.png'));
-survey.push(new Image('tauntaun', '../img/tauntaun.jpg'));
-survey.push(new Image('unicorn', '../img/unicorn.jpg'));
-survey.push(new Image('water can', '../img/water-can.jpg'));
-survey.push(new Image('wine glass', '../img/wine-glass.jpg'));
+survey.push(new Image('bag', 'img/bag.jpg'));
+survey.push(new Image('banana', 'img/banana.jpg'));
+survey.push(new Image('bathroom', 'img/bathroom.jpg'));
+survey.push(new Image('boots', 'img/boots.jpg'));
+survey.push(new Image('breakfast', 'img/breakfast.jpg'));
+survey.push(new Image('bubblegum', 'img/bubblegum.jpg'));
+survey.push(new Image('chair', 'img/chair.jpg'));
+survey.push(new Image('cthulhu', 'img/cthulhu.jpg'));
+survey.push(new Image('dog duck', 'img/dog-duck.jpg'));
+survey.push(new Image('dragon', 'img/dragon.jpg'));
+survey.push(new Image('pen', 'img/pen.jpg'));
+survey.push(new Image('pet sweep', 'img/pet-sweep.jpg'));
+survey.push(new Image('scissors', 'img/scissors.jpg'));
+survey.push(new Image('shark', 'img/shark.jpg'));
+survey.push(new Image('sweep', 'img/sweep.png'));
+survey.push(new Image('tauntaun', 'img/tauntaun.jpg'));
+survey.push(new Image('unicorn', 'img/unicorn.jpg'));
+survey.push(new Image('water can', 'img/water-can.jpg'));
+survey.push(new Image('wine glass', 'img/wine-glass.jpg'));
 
 let imgEls = document.querySelectorAll('img');
 let voteTrackerEl = document.getElementById('voting');
