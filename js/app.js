@@ -1,7 +1,7 @@
 'use strict';
 
 const survey = [];
-let roundsVoting = 10;
+let roundsVoting = 26;
 
 function Image(name, source) {
     this.name = name;
@@ -100,7 +100,7 @@ voteTrackerEl.addEventListener('click', handleClick);
 
 
 function renderResults() {
-    const sortedResults = survey.sort((a, b) => b.timesClicked - a.timesShown);
+    const sortedResults = survey.sort((a, b) => b.timesShown - a.timesClicked);
 
     sortedResults.forEach(product => {
         let liEl = document.createElement('li');
