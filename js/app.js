@@ -2,6 +2,7 @@
 
 const survey = [];
 let roundsVoting = 26;
+let chartObject = null;
 
 function Image(name, source) {
     this.name = name;
@@ -52,7 +53,7 @@ function renderProducts() {
     console.log('PRODUCTS TO RE-RENDER', imgEls, product1, product2, product3);
 
     while (product1.name === product2.name || product1.name === product3.name || product2.name === product3.name) {
-        survey[generateProducts()] = survey[generateProducts()];
+        // survey[generateProducts()] = survey[generateProducts()];
         product1 = survey[generateProducts()];
         product2 = survey[generateProducts()];
         product3 = survey[generateProducts()];
@@ -73,7 +74,7 @@ function renderProducts() {
 
 
 function handleClick(event) {
-    console.log(event.target.id);
+    console.log('THIS IS THE CLICK EVENT', event.target.id);
 
     let productClicked = event.target.id;
     // survey[0].timesClicked++;
@@ -104,7 +105,7 @@ function renderResults() {
 
     sortedResults.forEach(product => {
         let liEl = document.createElement('li');
-        liEl.textContent = `${product.name}: clicked ${product.timesClicked} times, shown ${product.timesShown} times`;
+        liEl.textContent = `${product.name}: voted for ${product.timesClicked} Times, Shown ${product.timesShown} Times`;
         resultsEl.appendChild(liEl);
         console.log(liEl);
     });
@@ -117,7 +118,45 @@ if (roundsVoting) {
     console.log(voteTrackerEl);
 } else {
     resultsEl.removeEventListener('click', renderResults);
+    renderChart();
 }
 
 resultsEl.addEventListener('click', renderResults);
 
+const canvasEl = document.getElementById('chart');
+
+function renderChart() {
+    let labels = [];
+    let votes = [];
+    let shown = [];
+    survey.forEach(product => {
+        labels.push(product.name);
+        votes.push(product.timesClicked);
+        shown.push(product.timesShown);
+
+
+return new Chart(canvasEl, {
+    type: 'bar',
+    data: {
+        labels: ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog duck', 'dragon', 'pen', 'pet sweep','scissors','shark','sweep', 'tauntaun', 'unicorn', 'water can', 'wine glass'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3, 2, 12, 19, 3, 5, 2, 3, 2, 12, 19, 3, 5, 2],
+            borderwidth: 1,
+    },
+
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+    
+    }
+});
+
+
+
+function updateChart(data) {
+    console.log('CHART OBJECT TO UPDATE', chartObject.data.datasets[0].data););
+    chartObject.data.datasets[0].data = data;
+    chartObject.update();
