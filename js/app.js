@@ -3,6 +3,7 @@
 const survey = [];
 let roundsVoting = 25;
 let chartObject = null;
+let priorProducts = [];
 
 function Image(name, source) {
     this.name = name;
@@ -33,7 +34,7 @@ survey.push(new Image('wine glass', 'img/wine-glass.jpg'));
 
 let imgEls = document.querySelectorAll('img');
 let voteTrackerEl = document.getElementById('voting');
-// let resultsEl = document.getElementById('results');
+let resultsEl = document.getElementById('results');
 
 console.log('CURRENT RENDERED IMAGES', imgEls);
 
@@ -45,33 +46,34 @@ function generateProducts() {
     return Math.floor(Math.random() * survey.length);
 }
 
-let priorProducts = [];
 
 function renderProducts() {
 
-    let product1 = survey[generateProducts()];
-    let product2 = survey[generateProducts()];
-    let product3 = survey[generateProducts()];
+    let product1, product2, product3; 
+
     console.log('PRODUCTS TO RE-RENDER', imgEls, product1, product2, product3);
 
-    while (product1.name === product2.name || product1.name === product3.name || product2.name === product3.name) {
-
+    do {
         product1 = survey[generateProducts()];
         product2 = survey[generateProducts()];
         product3 = survey[generateProducts()];
+
+    } while (priorProducts.includes(product1) || priorProducts.includes(product2) || priorProducts.includes(product3) || product1 === product2 || product1 === product3 || product2 === product3);
+
+        
+        priorProducts = [product1, product2, product3];
+        
+        imgEls[0].src = product1.source;
+        imgEls[0].id = product1.name;
+        product1.timesShown += 1;
+        imgEls[1].src = product2.source;
+        imgEls[1].id = product2.name;
+        product2.timesShown += 1;
+        imgEls[2].src = product3.source;
+        imgEls[2].id = product3.name;
+        product3.timesShown += 1;
     }
-
-    imgEls[0].src = product1.source;
-    imgEls[0].id = product1.name;
-    product1.timesShown += 1;
-    imgEls[1].src = product2.source;
-    imgEls[1].id = product2.name;
-    product2.timesShown += 1;
-    imgEls[2].src = product3.source;
-    imgEls[2].id = product3.name;
-    product3.timesShown += 1;
-}
-
+        
 
 
 
@@ -102,7 +104,7 @@ voteTrackerEl.addEventListener('click', handleClick);
 
 
 // function renderResults() {
-//     const sortedResults = survey.sort((a, b) => b.timesShown - a.timesClicked);
+    const sortedResults = survey.sort((a, b) => b.timesClicked - a.timesClicked);
 
 //     sortedResults.forEach(product => {
 //         let liEl = document.createElement('li');
