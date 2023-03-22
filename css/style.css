@@ -13,23 +13,42 @@
     cursor: pointer;
 }
 
-#voting {
-    border: thin solid black;
+body {
+}
+
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 40px;
 }
 
 #voting {
     display: grid;
-    width: 500px;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: .5fr .5fr .5fr;
+    grid-template-rows: .01fr .01fr .01fr;
+    padding: 1em;
+    margin: 1em auto;
 }
 
 img {
-    max-width: 100%;
-    height: auto;   
+    width: 100%;
+    height: auto;
     margin: auto;
 }
 
-#grid {
-    background-color: white;
+div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    height: 75px;
+    width: 200px;
+    border-radius: 5px 25px;
+    padding: 1em;
+    background-color: #f5f5f5;
+
 }
