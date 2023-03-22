@@ -1,7 +1,7 @@
 'use strict';
 
 const survey = [];
-let roundsVoting = 26;
+let roundsVoting = 25;
 let chartObject = null;
 
 function Image(name, source) {
@@ -33,7 +33,7 @@ survey.push(new Image('wine glass', 'img/wine-glass.jpg'));
 
 let imgEls = document.querySelectorAll('img');
 let voteTrackerEl = document.getElementById('voting');
-let resultsEl = document.getElementById('results');
+// let resultsEl = document.getElementById('results');
 
 console.log('CURRENT RENDERED IMAGES', imgEls);
 
@@ -45,6 +45,8 @@ function generateProducts() {
     return Math.floor(Math.random() * survey.length);
 }
 
+let priorProducts = [];
+
 function renderProducts() {
 
     let product1 = survey[generateProducts()];
@@ -53,7 +55,7 @@ function renderProducts() {
     console.log('PRODUCTS TO RE-RENDER', imgEls, product1, product2, product3);
 
     while (product1.name === product2.name || product1.name === product3.name || product2.name === product3.name) {
-        // survey[generateProducts()] = survey[generateProducts()];
+
         product1 = survey[generateProducts()];
         product2 = survey[generateProducts()];
         product3 = survey[generateProducts()];
@@ -83,15 +85,14 @@ function handleClick(event) {
             product.timesClicked += 1;
         }
     });
+    console.log('UPDATE SURVEY', survey);
+
     if (roundsVoting) {
         renderProducts();
         roundsVoting--;
-        console.log(roundsVoting);
-        console.log(voteTrackerEl);
-        console.log(imgEls);
-        console.log(survey);
     } else {
         voteTrackerEl.removeEventListener('click', handleClick);
+        chartObject = renderChart();
     }
 }
 
@@ -100,63 +101,74 @@ voteTrackerEl.addEventListener('click', handleClick);
 
 
 
-function renderResults() {
-    const sortedResults = survey.sort((a, b) => b.timesShown - a.timesClicked);
+// function renderResults() {
+//     const sortedResults = survey.sort((a, b) => b.timesShown - a.timesClicked);
 
-    sortedResults.forEach(product => {
-        let liEl = document.createElement('li');
-        liEl.textContent = `${product.name}: voted for ${product.timesClicked} Times, Shown ${product.timesShown} Times`;
-        resultsEl.appendChild(liEl);
-        console.log(liEl);
-    });
-}
+//     sortedResults.forEach(product => {
+//         let liEl = document.createElement('li');
+//         liEl.textContent = `${product.name}: voted for ${product.timesClicked} Times, Shown ${product.timesShown} Times`;
+//         resultsEl.appendChild(liEl);
+//         console.log(liEl);
+//     });
+// }
 
-if (roundsVoting) {
-    renderProducts();
-    roundsVoting--;
-    console.log(roundsVoting);
-    console.log(voteTrackerEl);
-} else {
-    resultsEl.removeEventListener('click', renderResults);
-    renderChart();
-}
+// if (roundsVoting) {
+//     renderProducts();
+//     roundsVoting--;
+//     console.log(roundsVoting);
+//     console.log(voteTrackerEl);
+// } else {
+//     resultsEl.removeEventListener('click', renderResults);
+//     renderChart();
+// }
 
-resultsEl.addEventListener('click', renderResults);
+// resultsEl.addEventListener('click', renderResults);
 
 const canvasEl = document.getElementById('chart');
 
 function renderChart() {
     let labels = [];
     let votes = [];
-    let shown = [];
+    let shown = []
     survey.forEach(product => {
         labels.push(product.name);
         votes.push(product.timesClicked);
         shown.push(product.timesShown);
+    });
 
-
-return new Chart(canvasEl, {
-    type: 'bar',
-    data: {
-        labels: ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog duck', 'dragon', 'pen', 'pet sweep','scissors','shark','sweep', 'tauntaun', 'unicorn', 'water can', 'wine glass'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3, 2, 12, 19, 3, 5, 2, 3, 2, 12, 19, 3, 5, 2],
-            borderwidth: 1,
-    },
-
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+    return new Chart(canvasEl, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Votes',
+                data: votes,
+                borderwidth: 1,
+            }, {
+                label: 'Number of Shown',
+                data: shown,
+                borderwidth: 1,
+            }],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
-    
-    }
+        }
+    });
+}
+
+let buttonEl = document.getElementById('submit');
+buttonEl.addEventListener('click', function () {
+    updateChart([1, 2, 3, 4, 5, 6, 7, 8]);
 });
 
 
 
-function updateChart(data) {
-    console.log('CHART OBJECT TO UPDATE', chartObject.data.datasets[0].data););
-    chartObject.data.datasets[0].data = data;
-    chartObject.update();
+    function updateChart(data) {
+        console.log('CHART OBJECT TO UPDATE', chartObject.data.datasets[0].data);
+        chartObject.data.datasets[0].data = data;
+        chartObject.update();
+    }
