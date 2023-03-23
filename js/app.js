@@ -76,6 +76,7 @@ function renderProducts() {
 
 
 
+loadData();
 
 function handleClick(event) {
     // console.log('THIS IS THE CLICK EVENT', event.target.id);
@@ -88,7 +89,7 @@ function handleClick(event) {
     });
     // console.log('UPDATE SURVEY', survey);
 
-    localStorage.setItem('survey', JSON.stringify(survey));
+    // localStorage.setItem('survey', JSON.stringify(survey));
 
     if (roundsVoting) {
         renderProducts();
@@ -98,17 +99,30 @@ function handleClick(event) {
         alert('Thank you for voting!');
         chartObject = renderChart();
 
-        const storedSurvey = localStorage.getItem('survey');
-        if (storedSurvey) {
-            survey = JSON.parse(storedSurvey);
-            renderProducts();
-        }
+        // const storedSurvey = localStorage.getItem('survey');
+        // if (storedSurvey) {
+        //     survey = JSON.parse(storedSurvey);
+        // }
     }
+    saveData();
 }
 
 voteTrackerEl.addEventListener('click', handleClick);
 
+function saveData() {
+    let stringData = JSON.stringify(survey);
+    localStorage.setItem('surveyData', stringData);
+    // console.log('SAVED DATA', stringData);   
+}
 
+function loadData() {
+    let storedData = JSON.parse(localStorage.getItem('surveyData'));
+    if (storedData) {
+        survey = JSON.parse(storedData);
+    } else {
+        survey = [];
+    }
+}
 
 
 // function renderResults() {

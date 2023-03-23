@@ -2,6 +2,8 @@
 
 **_Lighthouse Report, Lab 13_**
 
+**Lower score due to some outsourced implemented CSS code**
+
 <img src=/assets/lab13lighthouse.png>
 
 **_Lighthouse Report, Lab 12_**
