@@ -1,7 +1,7 @@
 'use strict';
 
-const survey = [];
-let roundsVoting = 25;
+let survey = [];
+let roundsVoting = 5;
 let chartObject = null;
 let priorProducts = [];
 
@@ -36,9 +36,9 @@ let imgEls = document.querySelectorAll('img');
 let voteTrackerEl = document.getElementById('voting');
 let resultsEl = document.getElementById('results');
 
-console.log('CURRENT RENDERED IMAGES', imgEls);
+// console.log('CURRENT RENDERED IMAGES', imgEls);
 
-console.log('CURRENT SURVEY', survey);
+// console.log('CURRENT SURVEY', survey);
 
 renderProducts();
 
@@ -49,9 +49,9 @@ function generateProducts() {
 
 function renderProducts() {
 
-    let product1, product2, product3; 
+    let product1, product2, product3;
 
-    console.log('PRODUCTS TO RE-RENDER', imgEls, product1, product2, product3);
+    // console.log('PRODUCTS TO RE-RENDER', imgEls, product1, product2, product3);
 
     do {
         product1 = survey[generateProducts()];
@@ -60,41 +60,49 @@ function renderProducts() {
 
     } while (priorProducts.includes(product1) || priorProducts.includes(product2) || priorProducts.includes(product3) || product1 === product2 || product1 === product3 || product2 === product3);
 
-        
-        priorProducts = [product1, product2, product3];
-        
-        imgEls[0].src = product1.source;
-        imgEls[0].id = product1.name;
-        product1.timesShown += 1;
-        imgEls[1].src = product2.source;
-        imgEls[1].id = product2.name;
-        product2.timesShown += 1;
-        imgEls[2].src = product3.source;
-        imgEls[2].id = product3.name;
-        product3.timesShown += 1;
-    }
-        
+
+    priorProducts = [product1, product2, product3];
+
+    imgEls[0].src = product1.source;
+    imgEls[0].id = product1.name;
+    product1.timesShown += 1;
+    imgEls[1].src = product2.source;
+    imgEls[1].id = product2.name;
+    product2.timesShown += 1;
+    imgEls[2].src = product3.source;
+    imgEls[2].id = product3.name;
+    product3.timesShown += 1;
+}
+
 
 
 
 function handleClick(event) {
-    console.log('THIS IS THE CLICK EVENT', event.target.id);
+    // console.log('THIS IS THE CLICK EVENT', event.target.id);
 
     let productClicked = event.target.id;
-    // survey[0].timesClicked++;
     survey.forEach(product => {
         if (product.name === productClicked) {
             product.timesClicked += 1;
         }
     });
-    console.log('UPDATE SURVEY', survey);
+    // console.log('UPDATE SURVEY', survey);
+
+    localStorage.setItem('survey', JSON.stringify(survey));
 
     if (roundsVoting) {
         renderProducts();
         roundsVoting--;
     } else {
         voteTrackerEl.removeEventListener('click', handleClick);
+        alert('Thank you for voting!');
         chartObject = renderChart();
+
+        const storedSurvey = localStorage.getItem('survey');
+        if (storedSurvey) {
+            survey = JSON.parse(storedSurvey);
+            renderProducts();
+        }
     }
 }
 
@@ -104,7 +112,7 @@ voteTrackerEl.addEventListener('click', handleClick);
 
 
 // function renderResults() {
-    const sortedResults = survey.sort((a, b) => b.timesClicked - a.timesClicked);
+// const sortedResults = survey.sort((a, b) => b.timesClicked - a.timesClicked);
 
 //     sortedResults.forEach(product => {
 //         let liEl = document.createElement('li');
@@ -145,11 +153,36 @@ function renderChart() {
             datasets: [{
                 label: 'Number of Votes',
                 data: votes,
-                borderwidth: 1,
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.3)',
+                ],
+                borderColor: [
+                    'rgb(54, 162, 235, 0.8)',
+
+                ],
+                borderWidth: 1.5,
+                hoverBackgroundColor: [
+                    'rgba(255, 159, 64, 0.4)'
+                ],
+                hoverBorderColor: [
+                    'rgb(255, 159, 64, 0.8)'
+                ],
             }, {
                 label: 'Number of Shown',
                 data: shown,
-                borderwidth: 1,
+                backgroundColor: [
+                    'rgba(153, 102, 255, 0.3)',
+                ],
+                borderColor: [
+                    'rgb(153, 102, 255, 0.8)',
+                ],
+                borderWidth: 1.5,
+                hoverBackgroundColor: [
+                    'rgba(255, 205, 86, 0.4)'
+                ],
+                hoverBorderColor: [
+                    'rgb(255, 205, 86, 0.8)'
+                ],
             }],
         },
         options: {
@@ -169,8 +202,8 @@ buttonEl.addEventListener('click', function () {
 
 
 
-    function updateChart(data) {
-        console.log('CHART OBJECT TO UPDATE', chartObject.data.datasets[0].data);
-        chartObject.data.datasets[0].data = data;
-        chartObject.update();
-    }
+function updateChart(data) {
+    console.log('CHART OBJECT TO UPDATE', chartObject.data.datasets[0].data);
+    chartObject.data.datasets[0].data = data;
+    chartObject.update();
+}
