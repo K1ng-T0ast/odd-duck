@@ -1,7 +1,7 @@
 'use strict';
 
 let survey = [];
-let roundsVoting = 5;
+let roundsVoting = 25;
 let chartObject = null;
 let priorProducts = [];
 

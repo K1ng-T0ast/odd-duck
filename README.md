@@ -1,6 +1,8 @@
 # Odd Duck Project, Class 201, Week 3
 
+**_Lighthouse Report, Lab 13_**
 
+<img src=/assets/lab13lighthouse.png>
 
 **_Lighthouse Report, Lab 12_**
 
